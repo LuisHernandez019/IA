@@ -24,11 +24,32 @@ class Individuo():
    def get_aptitud(self):
       return self.aptitud
 
-def apareamiento():
+# Proceso iterativo
+
+def cruza():
    pass
+
+def apareamiento():
+   pob_tmp = poblacion.copy()
+   parejas = []
+
+   while len(pob_tmp) > 0:
+      num_random = np.random.randint(0,len(pob_tmp)-1)
+      padre1 = pob_tmp.pop(num_random)
+
+      if len(pob_tmp) == 1:
+         padre2 = pob_tmp.pop(0)
+      else:
+         num_random = np.random.randint(0,len(pob_tmp)-1)
+         padre2 = pob_tmp.pop(num_random)
+
+      parejas.append([padre1,padre2])
+   
+   return parejas
 
 def proceso_iterativo():
    apareamiento()
+   cruza()
 
 # Inicialización
 
@@ -56,7 +77,7 @@ def generar_genotipo():
    return np.random.randint(0, 2, num_genes)
 
 def generar_poblacion():
-   poblacion = []
+   population = []
 
    while len(poblacion) != TAM_POB_INICIAL:
       ind_tmp = Individuo()
@@ -70,15 +91,13 @@ def generar_poblacion():
       ind_tmp.set_aptitud(aptitud)
 
       if ind_tmp.get_fenotipo() >= VALOR_MIN and ind_tmp.get_fenotipo() <= VALOR_MAX:
-         poblacion.append(ind_tmp)
+         population.append(ind_tmp)
 
-   return poblacion
+   return population
 
 def inicializacion():
+   global poblacion
    poblacion = generar_poblacion()
-
-   for individuo in poblacion:
-      print(individuo.get_fenotipo())
 
 if __name__ == '__main__':
    TAM_POB_INICIAL = 4                  # Tamaño población inicial
