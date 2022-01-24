@@ -54,6 +54,7 @@ def get_fenotipos(individual, min_val_x, min_val_y, resolutions):
 
 def get_all_fenotipos(population, min_val_x, min_val_y, max_val_x, max_val_y, resolutions):
     fenotipos = []
+
     for individual in population:
         fenotipo = get_fenotipos(individual, min_val_x, min_val_y, resolutions)
         fenotipos.append(fenotipo)
@@ -61,6 +62,7 @@ def get_all_fenotipos(population, min_val_x, min_val_y, max_val_x, max_val_y, re
         if j[0] > max_val_x or j[1] > max_val_y:
             fenotipos.pop(i)
             population.pop(i)
+
     return [population,fenotipos]
 
 def generate_individuo(gen_x, gen__y):
@@ -75,14 +77,17 @@ def generate_population(gen_size_x, gen_size_y, min_val_x, max_val_x, min_val_y,
 
 def crear_poblacion_inicial(gen_size_x, gen_size_y, poblacion_size):
     poblacion_inicial = []
+
     for i in range(poblacion_size):
         new_individuo = generate_individuo(gen_size_x, gen_size_y)
         poblacion_inicial.append(new_individuo)
+
     return poblacion_inicial
 
 def create_parejas(population):
     temp = population.copy()
     parejas = []
+
     if (len(temp) % 2) != 0:
         temp.pop(randint(0,len(temp)-1))
     while len(temp) > 0:
@@ -92,6 +97,7 @@ def create_parejas(population):
         else:
             parent_2 = temp.pop(randint(0,len(temp)-1))
         parejas.append([parent_1,parent_2])
+
     return parejas
 
 def create_hijos(couple, population, prob_mutate_individual, prob_mutate_gen):
@@ -134,12 +140,14 @@ def mutatacion(genotipo, prob_mutate_individual ,prob_mutate_gen):
                 else:
                     new_gen[i] = 1
         genotipo = new_gen
+
     return genotipo
 
 def evaluate_population(individuos):
     fitness_list = []
     for fenotipo in individuos[1]:
         fitness_list.append(g(fenotipo[0],fenotipo[1]))
+
     return [individuos[0], individuos[1],fitness_list]
 
 def cortar_minimos(individuos):
@@ -167,22 +175,22 @@ def get_best_individual(individuos,mejores_soluciones, maximo):
 
 def algoritmo_genetico(maximo):
     global min_val_x
-    min_val_x = float(field_min_x.get())
     global min_val_y
+    global res_x
+    global res_y
+    global generaciones  
+    global poblacion 
+    global prob_mutate_individual
+    global prob_mutate_gen 
+    min_val_x = float(field_min_x.get())
     min_val_y = float(field_min_y.get())
     max_val_x = float(field_max_x.get())
     max_val_y = float(field_max_y.get())
-    global res_x
     res_x = float(field_res_x.get())
-    global res_y 
     res_y = float(field_res_y.get())
-    global generaciones 
     generaciones = int(field_generaciones.get())
-    global poblacion 
     poblacion = int(field_generaciones.get())
-    global prob_mutate_individual
     prob_mutate_individual = float(field_mutar_i.get())
-    global prob_mutate_gen 
     prob_mutate_gen = float(field_mutar_g.get())
 
     aptitud_maxima = []
@@ -221,11 +229,11 @@ def algoritmo_genetico(maximo):
     individuos = get_all_fenotipos(population, min_val_x, min_val_y, max_val_x, max_val_y, [res_x, res_y])
     individuos = evaluate_population(individuos)
     while 0 in individuos[2]:
-            for i in range(len(individuos[2])):
-                if individuos[2][i] == 0:
-                    individuos[0].pop(i)
-                    individuos[1].pop(i)
-                    individuos[2].pop(i)
+        for i in range(len(individuos[2])):
+            if individuos[2][i] == 0:
+                individuos[0].pop(i)
+                individuos[1].pop(i)
+                individuos[2].pop(i)
 
     for i in range(generaciones):
         while len(individuos[0]) > poblacion:
@@ -258,28 +266,31 @@ def algoritmo_genetico(maximo):
         else:
             index = mejores_soluciones[2].index(min(mejores_soluciones[2]))
             complemento = 'El punto mínimo es: '
+
         mejor_solucion = (mejores_soluciones[0][index],mejores_soluciones[1][index],mejores_soluciones[2][index])
         txt_resultado['text'] = f'{complemento}{mejor_solucion[1]}\nSu valor es: {mejor_solucion[2]}'
         
         mejores_x = []
         mejores_y = []
+
         for ejes in mejores_soluciones[1]:
             mejores_x.append(ejes[0])
             mejores_y.append(ejes[1])
         
-
-
         fig = plt.figure(figsize=(10,5))
         fig.tight_layout()
         plt.style.use('_mpl-gallery')
         x = []
+
         for i in range(len(aptitud_maxima)):
             x.append(i)
+
         ax = plt.subplot(1,2,1)
         ax.plot(x,aptitud_maxima, label='Caso Máximo')
         ax.plot(x,aptitud_promedio, label='Caso Promedio')
         ax.plot(x,aptitud_minima, label='Caso Mínimo')
         ax.legend(loc='best')
+
         if maximo:
             ax.set_title('Buscando máximo')
         else:
@@ -292,7 +303,6 @@ def algoritmo_genetico(maximo):
         ax_2.set_title("Mejores individuos")
         
         plt.show()
-
     else:
         txt_resultado['text'] = 'La función no está definida en los intervalos definidos'
 
@@ -304,12 +314,14 @@ def buscar_minimo():
 
 if __name__ == '__main__':
     root = Tk()
-    root.geometry('780x400')
-    root.title('Algoritmo genético con 2 variables')
-    fuente = font.Font(size=13)
+    root.geometry('735x375')
+    root.title('[193269/193291] IA.C1.A1 Algoritmo genético de 2 variables')
+    root.configure(bg='#2A0C4E')
+    fuente = font.Font(size=13, font='Helvetica 10 bold')
+    background = '#2A0C4E'
 
-    label_min_x = Label(root,text='Valor mínimo de X', width=17, height=1, font= fuente)
-    label_min_x.place(x=10,y=10)
+    label_min_x = Label(root,text='Valor mínimo de X', width=17, height=1, font=fuente, background=background, fg='white')
+    label_min_x.place(x=5,y=10)
     text_entry_test_1 = StringVar()
     text_entry_test_1.set('1')
     
@@ -324,19 +336,19 @@ if __name__ == '__main__':
     field_min_x = Entry(root, width=18, font= fuente, textvariable=text_entry_test_1)
     field_min_x.place(x=10,y=40)
 
-    label_max_x = Label(root,text='Valor máximo de X', width=17, height=1, font= fuente)
-    label_max_x.place(x=200,y=10)
+    label_max_x = Label(root,text='Valor máximo de X', width=17, height=1, font= fuente, background=background, fg='white')
+    label_max_x.place(x=192.5,y=10)
 
     field_max_x = Entry(root, width=18, font= fuente, textvariable=text_entry_test_2)
     field_max_x.place(x=200,y=40)
 
-    label_min_y = Label(root,text='Valor mínimo de Y', width=17, height=1, font= fuente)
-    label_min_y.place(x=390,y=10)
+    label_min_y = Label(root,text='Valor mínimo de Y', width=17, height=1, font= fuente, background=background, fg='white')
+    label_min_y.place(x=382.5,y=10)
     field_min_y = Entry(root, width=18, font= fuente, textvariable=text_entry_test_3)
     field_min_y.place(x=390,y=40)
 
-    label_max_y = Label(root,text='Valor máximo de Y', width=17, height=1, font= fuente)
-    label_max_y.place(x=580,y=10)
+    label_max_y = Label(root,text='Valor máximo de Y', width=17, height=1, font= fuente, background=background, fg='white')
+    label_max_y.place(x=575,y=10)
     field_max_y = Entry(root, width=18, font= fuente, textvariable=text_entry_test_4)
     field_max_y.place(x=580,y=40)
 
@@ -345,53 +357,53 @@ if __name__ == '__main__':
     test_resolucion_2 = StringVar()
     test_resolucion_2.set('0.0015')
 
-    label_res_x = Label(root,text='Resolución de X', width=17, height=1, font= fuente)
-    label_res_x.place(x=10,y=100)
+    label_res_x = Label(root,text='Resolución de X', width=17, height=1, font= fuente, background=background, fg='white')
+    label_res_x.place(x=5,y=100)
     field_res_x = Entry(root, width=18, font= fuente, textvariable=test_resolucion_1)
-    field_res_x.place(x=10,y=140)
+    field_res_x.place(x=10,y=130)
     
-    label_res_y = Label(root,text='Resolución de Y', width=17, height=1, font= fuente)
-    label_res_y.place(x=200,y=100)
+    label_res_y = Label(root,text='Resolución de Y', width=17, height=1, font= fuente, background=background, fg='white')
+    label_res_y.place(x=195,y=100)
     field_res_y = Entry(root, width=18, font= fuente, textvariable=test_resolucion_2)
-    field_res_y.place(x=200,y=140)
+    field_res_y.place(x=200,y=130)
 
     test_num_gen = StringVar()
     test_num_gen.set('100')
-    label_generaciones = Label(root,text='Número de Generaciones', width=21, height=1, font= fuente)
-    label_generaciones.place(x=390,y=100)
+    label_generaciones = Label(root,text='Número de Generaciones', width=21, height=1, font= fuente, background=background, fg='white')
+    label_generaciones.place(x=370,y=100)
 
     field_generaciones = Entry(root, width=18, font= fuente, textvariable=test_num_gen)
-    field_generaciones.place(x=390,y=140)
+    field_generaciones.place(x=390,y=130)
 
     test_num_poblacion = StringVar()
     test_num_poblacion.set('100')
-    label_poblacion = Label(root,text='Tamaño de la población', width=20, height=1, font= fuente)
-    label_poblacion.place(x=590,y=100)
+    label_poblacion = Label(root,text='Tamaño de la población', width=20, height=1, font= fuente, background=background, fg='white')
+    label_poblacion.place(x=560,y=100)
 
     field_poblacion = Entry(root, width=18, font= fuente, textvariable=test_num_poblacion)
-    field_poblacion.place(x=590,y=140)
+    field_poblacion.place(x=580,y=130)
 
     test_prob_i = StringVar()
     test_prob_i.set('0.13')
-    label_mutar_i = Label(root,text='Probabilidad de mutación de individuo', width=30, height=1, font= fuente)
-    label_mutar_i.place(x=30,y=200)
+    label_mutar_i = Label(root,text='Probabilidad de mutación de individuo', width=30, height=1, font= fuente, background=background, fg='white')
+    label_mutar_i.place(x=95.5,y=190)
     field_mutar_i = Entry(root, width=18, font= fuente, textvariable=test_prob_i)
-    field_mutar_i.place(x=70,y=240)
+    field_mutar_i.place(x=145,y=220)
     
     test_prob_g = StringVar()
     test_prob_g.set('0.1')
-    label_mutar_g = Label(root,text='Probabilidad de mutación de gen', width=30, height=1, font= fuente)
-    label_mutar_g.place(x=400,y=200)
+    label_mutar_g = Label(root,text='Probabilidad de mutación de gen', width=30, height=1, font= fuente, background=background, fg='white')
+    label_mutar_g.place(x=390,y=190)
     field_mutar_g = Entry(root, width=18, font= fuente, textvariable=test_prob_g)
-    field_mutar_g.place(x=450,y=240)
+    field_mutar_g.place(x=450,y=220)
 
     btn_maximo = Button(root, text='Buscar máximo', font=fuente, width=17, command= buscar_maximo)
-    btn_maximo.place(x=100, y=350)
+    btn_maximo.place(x=100, y=320)
     
     btn_minimo = Button(root, text='Buscar mínimo', font=fuente, width=17, command= buscar_minimo)
-    btn_minimo.place(x=450, y=350)
+    btn_minimo.place(x=450, y=320)
 
-    txt_resultado = Label(root,text='', width=50,height=2, font= fuente)
-    txt_resultado.place(x=200,y=285)
+    txt_resultado = Label(root,text='', width=50,height=2, font= fuente, background=background, fg='white')
+    txt_resultado.place(x=150,y=265)
 
     root.mainloop()
