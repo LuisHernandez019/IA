@@ -5,6 +5,8 @@ import statistics
 from tkinter import Label, Tk, Button, Entry, StringVar
 from tkinter import font
 
+from video import create_video
+
 min_val_x = '' 
 min_val_y = '' 
 max_val_x = ''
@@ -39,7 +41,7 @@ def g(x,y):
     try:
         aptitud = 5 / (math.pow(y,3) + math.sqrt(math.pow(x,3)))
     except (ValueError, ZeroDivisionError):
-        aptitud = 0
+        aptitud = None
     return aptitud
 
 def get_fenotipo(min_val,gen,res):
@@ -213,7 +215,7 @@ def algoritmo_genetico(maximo):
 
     aptitudes = []
     for aptitud in individuos[2]:
-        if aptitud > 0:
+        if aptitud is not None:
             aptitudes.append(aptitud)
     
     if len(aptitudes) >= 1:
@@ -228,14 +230,14 @@ def algoritmo_genetico(maximo):
 
     individuos = get_all_fenotipos(population, min_val_x, min_val_y, max_val_x, max_val_y, [res_x, res_y])
     individuos = evaluate_population(individuos)
-    while 0 in individuos[2]:
+    while None in individuos[2]:
         for i in range(len(individuos[2])):
-            if individuos[2][i] == 0:
+            if individuos[2][i] is None:
                 individuos[0].pop(i)
                 individuos[1].pop(i)
                 individuos[2].pop(i)
 
-    for i in range(generaciones):
+    for f in range(generaciones):
         while len(individuos[0]) > poblacion:
             if maximo:
                 cortar_minimos(individuos)
@@ -243,9 +245,9 @@ def algoritmo_genetico(maximo):
                 cortar_maximos(individuos)
         individuos = get_all_fenotipos(individuos[0], min_val_x, min_val_y, max_val_x, max_val_y, [res_x, res_y])
         individuos = evaluate_population(individuos)
-        while 0 in individuos[2]:
+        while None in individuos[2]:
             for i in range(len(individuos[2])):
-                if individuos[2][i] == 0:
+                if individuos[2][i] is None:
                     individuos[0].pop(i)
                     individuos[1].pop(i)
                     individuos[2].pop(i)
@@ -254,7 +256,19 @@ def algoritmo_genetico(maximo):
             aptitud_minima.append(min(individuos[2]))
             aptitud_promedio.append(statistics.mean(individuos[2]))
             get_best_individual(individuos,mejores_soluciones, maximo)
-            
+        plt.plot(individuos[1][0], individuos[1][1],"o",color="red")
+        if f == 0 or f == 1:
+            num_gen = f + 2
+        else:
+            num_gen = f +1
+        plt.title(f'Generación {num_gen}')
+        if num_gen < 10:
+            name = f'0{num_gen}'
+        elif num_gen >= 10 and num_gen <100:
+            name = f'{f+1}'
+        elif num_gen >= 100 and num_gen < 1000:
+            name = f'c_{num_gen}'
+        plt.savefig(f'imagenes/{name}.png')
         parejas = create_parejas(individuos[0])
         for couple in parejas:
             create_hijos(couple,individuos[0], prob_mutate_individual, prob_mutate_gen)
@@ -286,23 +300,30 @@ def algoritmo_genetico(maximo):
             x.append(i)
 
         ax = plt.subplot(1,2,1)
-        ax.plot(x,aptitud_maxima, label='Caso Máximo')
-        ax.plot(x,aptitud_promedio, label='Caso Promedio')
-        ax.plot(x,aptitud_minima, label='Caso Mínimo')
-        ax.legend(loc='best')
+        
 
         if maximo:
             ax.set_title('Buscando máximo')
+            max_label = 'Mejor caso'
+            min_label = 'Peor caso'
         else:
             ax.set_title('Buscando mínimo')
+            min_label = 'Mejor caso'
+            max_label = 'Peor caso'
+
+        ax.plot(x,aptitud_maxima, label=max_label)
+        ax.plot(x,aptitud_promedio, label='Caso Promedio')
+        ax.plot(x,aptitud_minima, label=min_label)
+        ax.legend(loc='best')
         
         ax_2 = plt.subplot(1,2,2)
-        ax_2.scatter(mejores_x,mejores_y)
+        ax_2.scatter(mejor_solucion[1][0],mejor_solucion[1][1])
         ax_2.set_xlabel("X")
         ax_2.set_ylabel("Y")
-        ax_2.set_title("Mejores individuos")
+        ax_2.set_title("Mejor solución")
         
         plt.show()
+        create_video()
     else:
         txt_resultado['text'] = 'La función no está definida en los intervalos definidos'
 
