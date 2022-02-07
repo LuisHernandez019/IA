@@ -1,19 +1,16 @@
+import random
+import array
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import elitism
+import queens
 from deap import base
 from deap import creator
 from deap import tools
 
-import random
-import array
-
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-import elitism
-import queens
-
 # problem constants:
-NUM_OF_QUEENS = 10
+NUM_OF_QUEENS = 16
 
 # Genetic Algorithm constants:
 POPULATION_SIZE = 300

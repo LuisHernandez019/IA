@@ -219,14 +219,11 @@ def algoritmo_genetico(maximo):
             aptitudes.append(aptitud)
     
     if len(aptitudes) >= 1:
-        aptitud_maxima.append(max(aptitudes))
-        aptitud_minima.append(min(aptitudes))
-        aptitud_promedio.append(statistics.mean(aptitudes))
         get_best_individual(individuos,mejores_soluciones, maximo)
 
-    parejas = create_parejas(population)
-    for pareja in parejas:
-        create_hijos(pareja,population, prob_mutate_individual, prob_mutate_gen)
+        parejas = create_parejas(population)
+        for pareja in parejas:
+            create_hijos(pareja,population, prob_mutate_individual, prob_mutate_gen)
 
     individuos = get_all_fenotipos(population, min_val_x, min_val_y, max_val_x, max_val_y, [res_x, res_y])
     individuos = evaluate_population(individuos)
@@ -238,11 +235,7 @@ def algoritmo_genetico(maximo):
                 individuos[2].pop(i)
 
     for f in range(generaciones):
-        while len(individuos[0]) > poblacion:
-            if maximo:
-                cortar_minimos(individuos)
-            else:
-                cortar_maximos(individuos)
+        
         individuos = get_all_fenotipos(individuos[0], min_val_x, min_val_y, max_val_x, max_val_y, [res_x, res_y])
         individuos = evaluate_population(individuos)
         while None in individuos[2]:
@@ -252,26 +245,35 @@ def algoritmo_genetico(maximo):
                     individuos[1].pop(i)
                     individuos[2].pop(i)
         if len(individuos[2]) >= 1:
+            individuos = get_all_fenotipos(individuos[0], min_val_x, min_val_y, max_val_x, max_val_y, [res_x, res_y])
+            individuos = evaluate_population(individuos)
+
+            while len(individuos[0]) > poblacion:
+                if maximo:
+                    cortar_minimos(individuos)
+                else:
+                    cortar_maximos(individuos)
+
             aptitud_maxima.append(max(individuos[2]))
             aptitud_minima.append(min(individuos[2]))
             aptitud_promedio.append(statistics.mean(individuos[2]))
             get_best_individual(individuos,mejores_soluciones, maximo)
-        plt.plot(individuos[1][0], individuos[1][1],"o",color="red")
-        if f == 0 or f == 1:
-            num_gen = f + 2
-        else:
-            num_gen = f +1
-        plt.title(f'Generación {num_gen}')
-        if num_gen < 10:
-            name = f'0{num_gen}'
-        elif num_gen >= 10 and num_gen <100:
-            name = f'{f+1}'
-        elif num_gen >= 100 and num_gen < 1000:
-            name = f'c_{num_gen}'
-        plt.savefig(f'imagenes/{name}.png')
-        parejas = create_parejas(individuos[0])
-        for couple in parejas:
-            create_hijos(couple,individuos[0], prob_mutate_individual, prob_mutate_gen)
+            plt.plot(individuos[1][0], individuos[1][1],"o",color="red")
+            if f == 0 or f == 1:
+                num_gen = f + 2
+            else:
+                num_gen = f +1
+            plt.title(f'Generación {num_gen}')
+            if num_gen < 10:
+                name = f'0{num_gen}'
+            elif num_gen >= 10 and num_gen <100:
+                name = f'{f+1}'
+            elif num_gen >= 100 and num_gen < 1000:
+                name = f'c_{num_gen}'
+            plt.savefig(f'imagenes/{name}.png')
+            parejas = create_parejas(individuos[0])
+            for couple in parejas:
+                create_hijos(couple,individuos[0], prob_mutate_individual, prob_mutate_gen)
     
     if len(mejores_soluciones[0]) > 0:
         if maximo:

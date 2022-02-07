@@ -103,6 +103,5 @@ def main():
     plot = nQueens.plotBoard(solution)
     plot.show()
 
-
 if __name__ == "__main__":
     main()
