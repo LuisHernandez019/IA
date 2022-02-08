@@ -52,7 +52,7 @@ def main():
     plt.plot(minFitnessValues, color='red')
     plt.plot(meanFitnessValues, color='green')
     plt.xlabel('Generación')
-    plt.ylabel('Fitness Mínimo / Promeido')
+    plt.ylabel('Fitness Mínimo / Promedio')
     plt.title('Fitness mínimo y promedio alrededor de las generaciones.')
     sns.set_style("whitegrid", {'axes.grid' : False})
     nQueens.plotBoard(hof.items[0])
