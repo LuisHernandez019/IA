@@ -16,7 +16,7 @@ def main():
     MAX_GENERATIONS = int(field_generaciones.get())
     P_MUTATION = float(field_mutar_g.get())
     HALL_OF_FAME_SIZE = 30
-    P_CROSSOVER = 0.9
+    P_CROSSOVER = float(field_cruza_g.get())
     RANDOM_SEED = 42
 
     random.seed(RANDOM_SEED)
@@ -60,7 +60,7 @@ def main():
 
 if __name__ == "__main__":
     root = Tk()
-    root.geometry('450x320')
+    root.geometry('620x320')
     root.title('[193269/193291] Problema de las N reinas')
     root.configure(bg='#2A0C4E')
     
@@ -94,6 +94,13 @@ if __name__ == "__main__":
     label_mutar_g.place(x=195,y=130)
     field_mutar_g = Entry(root, width=18, font= fuente, textvariable=test_prob_g)
     field_mutar_g.place(x=250,y=160)
+
+    test_prob_c = StringVar()
+    test_prob_c.set('0.9')
+    label_cruza_g = Label(root,text='Probabilidad de cruza', width=30, height=1, font= fuente, background=background, fg='white')
+    label_cruza_g.place(x=375,y=130)
+    field_cruza_g = Entry(root, width=18, font= fuente, textvariable=test_prob_c)
+    field_cruza_g.place(x=430,y=160)
 
     btn_solucion = Button(root, text='Obtener solución', font=fuente, width=17, command=main)
     btn_solucion.place(x=145, y=225)
