@@ -68,7 +68,7 @@ if __name__ == "__main__":
     background = '#2A0C4E'
 
     test_num_gen = StringVar()
-    test_num_gen.set('8')
+    test_num_gen.set('16')
     label_generaciones = Label(root,text='Número de reinas', width=21, height=1, font=fuente, background=background, fg='white')
     label_generaciones.place(x=40,y=50)
     field_reinas = Entry(root, width=18, font=fuente, textvariable=test_num_gen)
