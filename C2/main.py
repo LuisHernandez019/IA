@@ -59,11 +59,11 @@ def execute_nn():
     label_W3['text'] = f'Pesos finales con Eta {etas[3]}: w0:{round(pesos[3][0],5)} w1:{round(pesos[3][1],5)} w2:{round(pesos[3][2],5)}'
     label_W4['text'] = f'Pesos finales con Eta {etas[4]}: w0:{round(pesos[4][0],5)} w1:{round(pesos[4][1],5)} w2:{round(pesos[4][2],5)}'
 
-    plt.plot(x,Y[0],color='blue',label=f'Eta {etas[0]}')
-    plt.plot(x,Y[1],color='red',label=f'Eta {etas[1]}')
-    plt.plot(x,Y[2],color='green',label=f'Eta {etas[2]}')
-    plt.plot(x,Y[3],color='orange',label=f'Eta {etas[3]}')
-    plt.plot(x,Y[4],color='yellow',label=f'Eta {etas[4]}')
+    plt.plot(x,Y[0],color='purple',label=f'Eta {etas[0]}')
+    plt.plot(x,Y[1],color='yellow',label=f'Eta {etas[1]}')
+    plt.plot(x,Y[2],color='red',label=f'Eta {etas[2]}')
+    plt.plot(x,Y[3],color='blue',label=f'Eta {etas[3]}')
+    plt.plot(x,Y[4],color='pink',label=f'Eta {etas[4]}')
     plt.legend(loc="upper right")
     plt.xlabel('Iteraciones')
     plt.ylabel('Error')
