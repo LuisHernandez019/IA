@@ -75,16 +75,19 @@ if __name__=='__main__':
     my_font = font.Font(size=13)
     root.geometry('800x575')
     root.title('[193269/193291 C2.A2.Perceptrón]')
+    root.configure(bg='#2A0C4E')
 
-    label_eta1 = Label(root, width=15, font=my_font,text='Eta 1')
+    background = '#2A0C4E'
+
+    label_eta1 = Label(root, width=15, font=my_font, text='Eta 1', background=background, fg='white')
     label_eta1.place(x=40,y=20)
-    label_eta2 = Label(root, width=15, font=my_font,text='Eta 2')
+    label_eta2 = Label(root, width=15, font=my_font,text='Eta 2', background=background, fg='white')
     label_eta2.place(x=40,y=90)
-    label_eta3 = Label(root, width=15, font=my_font,text='Eta 3')
+    label_eta3 = Label(root, width=15, font=my_font,text='Eta 3', background=background, fg='white')
     label_eta3.place(x=40,y=160)
-    label_eta4 = Label(root, width=15, font=my_font,text='Eta 4')
+    label_eta4 = Label(root, width=15, font=my_font,text='Eta 4', background=background, fg='white')
     label_eta4.place(x=40,y=230)
-    label_eta5 = Label(root, width=15, font=my_font,text='Eta 5')
+    label_eta5 = Label(root, width=15, font=my_font,text='Eta 5', background=background, fg='white')
     label_eta5.place(x=40,y=300)
 
     entry_eta1 = Entry(root,width=14, font=my_font)
@@ -98,7 +101,7 @@ if __name__=='__main__':
     entry_eta5 = Entry(root,width=14, font=my_font)
     entry_eta5.place(x=40,y=330)
 
-    label_Ys = Label(root, width=15, font=my_font, text='Yd:')
+    label_Ys = Label(root, width=15, font=my_font, text='Yd:', background=background, fg='white')
     label_Ys.place(x=90,y=400)
 
     entry_Y0 = Entry(root,width=8, font=my_font)
@@ -113,17 +116,17 @@ if __name__=='__main__':
     btn_exec_nn = Button(root, width=14, text='Ejecutar', font=my_font, command=execute_nn)
     btn_exec_nn.place(x=360,y=500)
 
-    label_FW = Label(root, width=60, font=my_font)
+    label_FW = Label(root, width=60, font=my_font, background=background, fg='white')
     label_FW.place(x=190,y=450)
-    label_W0 = Label(root, width=60, font=my_font)
+    label_W0 = Label(root, width=60, font=my_font, background=background, fg='white')
     label_W0.place(x=190,y=50)
-    label_W1 = Label(root, width=60, font=my_font)
+    label_W1 = Label(root, width=60, font=my_font, background=background, fg='white')
     label_W1.place(x=190,y=120)
-    label_W2 = Label(root, width=60, font=my_font)
+    label_W2 = Label(root, width=60, font=my_font, background=background, fg='white')
     label_W2.place(x=190,y=190)
-    label_W3 = Label(root, width=60, font=my_font)
+    label_W3 = Label(root, width=60, font=my_font, background=background, fg='white')
     label_W3.place(x=190,y=260)
-    label_W4 = Label(root, width=60, font=my_font)
+    label_W4 = Label(root, width=60, font=my_font, background=background, fg='white')
     label_W4.place(x=190,y=330)
 
     root.mainloop()
