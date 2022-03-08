@@ -13,13 +13,15 @@ def entrenar(X,W, eta, yd):
     errors = []
     yc = perceptron(X,W)
     ek = yd - yc
-    errors.append(ek.sum())
+    err = round(np.sum(np.array([e**2 for e in ek]))**5,3)
+    errors.append(err)
     Wk = W
-    while ek.sum() != 0:
+    while err != 0:
       Wk = Wk  + (eta*(ek.T.dot(X)))
       yc = perceptron(X,Wk)
       ek = yd - yc
-      errors.append(ek.sum())
+      err = round(np.sum(np.array([e**2 for e in ek]))**5,3)
+      errors.append(err)
     return errors , Wk
 
 def extender_arreglos(errors, max_size_array):
