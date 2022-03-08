@@ -74,7 +74,7 @@ if __name__=='__main__':
     root = Tk()
     my_font = font.Font(size=13)
     root.geometry('800x575')
-    root.title('[193269/193291 C2.A2.Perceptrón]')
+    root.title('[193269/193291] C2.A2.Perceptrón')
     root.configure(bg='#2A0C4E')
 
     background = '#2A0C4E'
