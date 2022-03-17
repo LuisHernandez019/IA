@@ -18,11 +18,6 @@ def activation_function(u):
 
 def perceptron(W,X):
    u = X.T.dot(W)
-   """
-   #A = 2 * 1200 = 1200 * 2
-   B = 2,
-   2 * 2
-   """
    return activation_function(u)
 
 def initialize_data():
@@ -44,7 +39,7 @@ def initialize_data():
 def start_training(data):
    X = data[0]
    yd = data[1]
-   eta = 0.0000001
+   eta = 0.0000005
    error = 1
    Wk = np.random.uniform(-1,1,2)
 
@@ -52,9 +47,8 @@ def start_training(data):
       yc = perceptron(X,Wk)
       ek = yd - yc
       Wk = Wk + (eta * (ek.dot(X.T)))
+
       error = np.linalg.norm(ek)
-      print(error)
-      print(yc)
    print(f'W: {Wk} \nYc: {yc}')
 
    return Wk
