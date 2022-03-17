@@ -18,6 +18,11 @@ def activation_function(u):
 
 def perceptron(W,X):
    u = X.T.dot(W)
+   """
+   #A = 2 * 1200 = 1200 * 2
+   B = 2,
+   2 * 2
+   """
    return activation_function(u)
 
 def initialize_data():
