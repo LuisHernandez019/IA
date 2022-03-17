@@ -36,7 +36,10 @@ def extender_arreglos(errors, max_size_array):
     return Y
 
 def execute_nn():
-    X = np.array([[1,0,0],[1,0,1],[1,1,0],[1,1,1]])
+    X = np.array([[1,0,0],
+                  [1,0,1],
+                  [1,1,0],
+                  [1,1,1]])
     W0 = np.random.rand(3)
     label_FW['text'] = f'Pesos iniciales: {W0}'
 
