@@ -13,7 +13,7 @@ data_augmentation = ImageDataGenerator(
 )
 
 data_test_augmentation = ImageDataGenerator(rescale=1./255)
-datos_entrenamiento = data_augmentation.flow_from_directory('dataset/train',target_size=(28,28), batch_size=15, class_mode='categorical')
+datos_entrenamiento = data_augmentation.flow_from_directory('dataset/train',target_size=(28,28), batch_size=32, class_mode='categorical')
 
 def red_convolucional():
    model = Sequential()
@@ -30,7 +30,7 @@ def red_convolucional():
 
    model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
-   historial = model.fit(datos_entrenamiento, epochs=15)
+   historial = model.fit(datos_entrenamiento, epochs= 15)
 
    datos_prueba = data_test_augmentation.flow_from_directory('dataset/test', target_size=(28,28), batch_size=32, class_mode='categorical')
 
@@ -45,7 +45,7 @@ def primer_red_densa():
 
    red_densa.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
-   historial = red_densa.fit(datos_entrenamiento, epochs=15)
+   historial = red_densa.fit(datos_entrenamiento, epochs= 15)
 
    datos_prueba = data_test_augmentation.flow_from_directory('dataset/test', target_size=(28,28), batch_size=32, class_mode='categorical')
 
@@ -62,7 +62,7 @@ def segunda_red_densa():
 
    red_densa.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
 
-   historial = red_densa.fit(datos_entrenamiento,epochs=15)
+   historial = red_densa.fit(datos_entrenamiento,epochs= 15)
 
    datos_prueba = data_test_augmentation.flow_from_directory('dataset/test', target_size=(28,28), batch_size=32, class_mode='categorical')
 
